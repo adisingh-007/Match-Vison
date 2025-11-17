@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-4">Football Video Analysis</h1>
+        <p class="lead mb-5">Upload your football match video and get detailed player tracking, ball possession
+            analysis, and performance metrics powered by AI.</p>
+        <a href="#upload-section" class="btn btn-light btn-lg px-4 py-2">
+            <i class="bi bi-upload me-2"></i>Get Started
+        </a>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Features Section -->
+    <section id="features" class="mb-5">
+        <h2 class="text-center mb-5 fw-bold">Key Features</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card h-100 feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+                    <h4 class="fw-bold">Player Tracking</h4>
+                    <p class="text-muted">Track each player's movement throughout the match with precision.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-speedometer2"></i>
+                    </div>
+                    <h4 class="fw-bold">Speed & Distance</h4>
+                    <p class="text-muted">Measure player speed and distance covered during the game.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-controller"></i>
+                    </div>
+                    <h4 class="fw-bold">Ball Possession</h4>
+                    <p class="text-muted">Analyze ball possession statistics for each team in real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="mb-5">
+        <h2 class="text-center mb-5 fw-bold">How It Works</h2>
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
+                    style="width: 70px; height: 70px;">
+                    <span class="fw-bold">1</span>
+                </div>
+                <h5>Upload Video</h5>
+                <p class="text-muted">Upload your football match video in MP4, AVI, MOV, or MKV format.</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
+                    style="width: 70px; height: 70px;">
+                    <span class="fw-bold">2</span>
+                </div>
+                <h5>AI Analysis</h5>
+                <p class="text-muted">Our AI processes the video using advanced computer vision techniques.</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
+                    style="width: 70px; height: 70px;">
+                    <span class="fw-bold">3</span>
+                </div>
+                <h5>Get Results</h5>
+                <p class="text-muted">Receive detailed analysis with visual annotations and statistics.</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
+                    style="width: 70px; height: 70px;">
+                    <span class="fw-bold">4</span>
+                </div>
+                <h5>Download</h5>
+                <p class="text-muted">Download the analyzed video and statistics for further use.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section id="upload-section" class="mb-5">
+        <h2 class="text-center mb-4 fw-bold">Upload Your Video</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" action="{{ url_for('upload_file') }}" enctype="multipart/form-data">
+                            <div class="mb-4">
+                                <div id="upload-area" class="upload-area">
+                                    <i class="bi bi-cloud-upload" style="font-size: 3rem;"></i>
+                                    <h4 class="mt-3">Drag & Drop your video here</h4>
+                                    <p class="text-muted">or</p>
+                                    <button type="button" class="btn btn-primary">
+                                        <i class="bi bi-folder me-1"></i> Browse Files
+                                    </button>
+                                    <p class="mt-3 text-muted small">Supported formats: MP4, AVI, MOV, MKV</p>
+                                    <p id="file-name" class="mt-2 text-primary fw-bold"></p>
+                                </div>
+                                <input type="file" name="video" id="video" class="d-none" accept=".mp4,.avi,.mov,.mkv">
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-play-circle me-2"></i>Process Video
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="mb-5">
+        <div class="card bg-light">
+            <div class="card-body text-center">
+                <h5 class="card-title">Powered by Advanced Computer Vision</h5>
+                <p class="card-text">Our system uses YOLO (You Only Look Once) object detection, OpenCV, and Python to
+                    provide accurate football analysis.</p>
+                <div class="d-flex justify-content-center gap-4">
+                    <span class="badge bg-primary">YOLO v8</span>
+                    <span class="badge bg-success">OpenCV</span>
+                    <span class="badge bg-warning text-dark">Python</span>
+                    <span class="badge bg-info">Flask</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

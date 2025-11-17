@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Football Analysis System{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        :root {
+            --primary-color: #1a6dcc;
+            --secondary-color: #28a745;
+            --accent-color: #ffc107;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), #0d47a1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(26, 109, 204, 0.9), rgba(13, 71, 161, 0.9)), url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            margin-bottom: 25px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: #0d47a1;
+            border-color: #0d47a1;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-weight: 600;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .upload-area {
+            border: 3px dashed #ced4da;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(26, 109, 204, 0.05);
+        }
+
+        .upload-area.active {
+            border-color: var(--primary-color);
+            background-color: rgba(26, 109, 204, 0.1);
+        }
+
+        .video-player {
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            background-color: #000;
+        }
+
+        .processing-spinner {
+            width: 4rem;
+            height: 4rem;
+            border-width: 0.4em;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Progress bar for loading -->
+    <div class="progress-container">
+        <div class="progress-bar"></div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h4>Processing Your Video</h4>
+            <p class="mb-0">This may take a few minutes...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                <i class="bi bi-play-circle-fill me-2"></i>
+                <span class="fw-bold">Football Analysis</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 Football Analysis System. All rights reserved.</p>
+            <p class="small mb-0">Powered by YOLO, OpenCV and Python</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple JavaScript for file upload interaction
+        document.addEventListener('DOMContentLoaded', function () {
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('video');
+
+            if (uploadArea && fileInput) {
+                uploadArea.addEventListener('click', () => {
+                    fileInput.click();
+                });
+
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('active');
+                });
+
+                uploadArea.addEventListener('dragleave', () => {
+                    uploadArea.classList.remove('active');
+                });
+
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('active');
+
+                    if (e.dataTransfer.files.length) {
+                        fileInput.files = e.dataTransfer.files;
+                        // Update the text to show the selected file
+                        const fileName = e.dataTransfer.files[0].name;
+                        document.getElementById('file-name').textContent = fileName;
+                    }
+                });
+
+                fileInput.addEventListener('change', () => {
+                    if (fileInput.files.length) {
+                        const fileName = fileInput.files[0].name;
+                        document.getElementById('file-name').textContent = fileName;
+                    }
+                });
+            }
+
+            // Form submission with loading indicator
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function (e) {
+                    // Show loading overlay
+                    document.querySelector('.loading-overlay').style.display = 'flex';
+                    document.querySelector('.progress-container').style.display = 'block';
+
+                    // Simulate progress
+                    let progress = 0;
+                    const progressBar = document.querySelector('.progress-bar');
+                    const interval = setInterval(() => {
+                        progress += Math.random() * 10;
+                        if (progress >= 100) {
+                            progress = 100;
+                            clearInterval(interval);
+                        }
+                        progressBar.style.width = progress + '%';
+                    }, 200);
+                });
+            }
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

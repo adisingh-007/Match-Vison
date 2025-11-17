@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis Results - Football Analysis System{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Results</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-5 fw-bold mb-3">Analysis Complete!</h1>
+            <p class="lead">Your video has been successfully processed with advanced football analytics.</p>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-film me-2"></i>Processed Video</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="video-player ratio ratio-16x9">
+                        <video controls>
+                            <source src="{{ url_for('processed_video', filename=filename) }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-bar-chart me-2"></i>Analysis Features</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-person-badge text-primary" style="font-size: 2.5rem;"></i>
+                                    <h5 class="card-title mt-3">Player Tracking</h5>
+                                    <p class="card-text">Each player is tracked throughout the match with unique
+                                        identifiers.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-speedometer2 text-success" style="font-size: 2.5rem;"></i>
+                                    <h5 class="card-title mt-3">Speed & Distance</h5>
+                                    <p class="card-text">Player speed and distance metrics are calculated and displayed.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-controller text-warning" style="font-size: 2.5rem;"></i>
+                                    <h5 class="card-title mt-3">Ball Possession</h5>
+                                    <p class="card-text">Real-time ball possession statistics for both teams.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Download Your Processed Video</h5>
+                    <p class="card-text">Save the analyzed video to your device for further review or sharing.</p>
+                    <a href="{{ url_for('download_file', filename=filename) }}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-download me-2"></i>Download Video
+                    </a>
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg ms-3">
+                        <i class="bi bi-plus-circle me-2"></i>Analyze Another Video
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Analysis Information</h5>
+                </div>
+                <div class="card-body">
+                    <h6>What's included in the analysis:</h6>
+                    <ul>
+                        <li>Player detection and tracking with unique ID numbers</li>
+                        <li>Team color assignment (red and blue teams)</li>
+                        <li>Ball detection and tracking</li>
+                        <li>Camera movement compensation</li>
+                        <li>Player speed and distance measurements</li>
+                        <li>Real-time ball possession statistics</li>
+                        <li>Visual annotations overlaid on the video</li>
+                    </ul>
+                    <p class="mb-0">The processed video contains all the analytical data visualized for easy
+                        understanding and review.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Ensure video plays properly
+    document.addEventListener('DOMContentLoaded', function () {
+        const video = document.querySelector('video');
+        if (video) {
+            video.addEventListener('loadeddata', function () {
+                console.log('Video loaded successfully');
+            });
+
+            video.addEventListener('error', function (e) {
+                console.error('Error loading video:', e);
+            });
+        }
+    });
+</script>
+{% endblock %}
